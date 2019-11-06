@@ -1,11 +1,18 @@
 <script>
-	export let name;
+  let numbers=[1,2,3,4];
+  $:sum=numbers.reduce((t,n)=>t+n);
+  
+  function addNumbers(){
+    numbers=[...numbers,numbers.length+1]
+  }
 </script>
 
 <style>
-	h1 {
+	p {
 		color: purple;
 	}
 </style>
-
-<h1>Hello {name}!</h1>
+<button on:click={addNumbers}>
+Add numbers
+</button>
+<p>{numbers.join('+')}={sum}</p>
