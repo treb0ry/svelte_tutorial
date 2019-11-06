@@ -40,6 +40,13 @@ var app = (function () {
     function text(data) {
         return document.createTextNode(data);
     }
+    function space() {
+        return text(' ');
+    }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -245,6 +252,19 @@ var app = (function () {
         dispatch_dev("SvelteDOMRemove", { node });
         detach(node);
     }
+    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation) {
+        const modifiers = options === true ? ["capture"] : options ? Array.from(Object.keys(options)) : [];
+        if (has_prevent_default)
+            modifiers.push('preventDefault');
+        if (has_stop_propagation)
+            modifiers.push('stopPropagation');
+        dispatch_dev("SvelteDOMAddEventListener", { node, event, handler, modifiers });
+        const dispose = listen(node, event, handler, options);
+        return () => {
+            dispatch_dev("SvelteDOMRemoveEventListener", { node, event, handler, modifiers });
+            dispose();
+        };
+    }
     function attr_dev(node, attribute, value) {
         attr(node, attribute, value);
         if (value == null)
@@ -279,16 +299,21 @@ var app = (function () {
     const file = "src\\App.svelte";
 
     function create_fragment(ctx) {
-    	var h1, t0, t1, t2;
+    	var button, t1, p, t2_value = ctx.numbers.join('+') + "", t2, t3, t4, dispose;
 
     	const block = {
     		c: function create() {
-    			h1 = element("h1");
-    			t0 = text("Hello ");
-    			t1 = text(ctx.name);
-    			t2 = text("!");
-    			attr_dev(h1, "class", "svelte-i7qo5m");
-    			add_location(h1, file, 10, 0, 82);
+    			button = element("button");
+    			button.textContent = "Add numbers";
+    			t1 = space();
+    			p = element("p");
+    			t2 = text(t2_value);
+    			t3 = text("=");
+    			t4 = text(ctx.sum);
+    			add_location(button, file, 14, 0, 197);
+    			attr_dev(p, "class", "svelte-1haej5p");
+    			add_location(p, file, 17, 0, 250);
+    			dispose = listen_dev(button, "click", ctx.addNumbers);
     		},
 
     		l: function claim(nodes) {
@@ -296,15 +321,21 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, h1, anchor);
-    			append_dev(h1, t0);
-    			append_dev(h1, t1);
-    			append_dev(h1, t2);
+    			insert_dev(target, button, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t2);
+    			append_dev(p, t3);
+    			append_dev(p, t4);
     		},
 
     		p: function update(changed, ctx) {
-    			if (changed.name) {
-    				set_data_dev(t1, ctx.name);
+    			if ((changed.numbers) && t2_value !== (t2_value = ctx.numbers.join('+') + "")) {
+    				set_data_dev(t2, t2_value);
+    			}
+
+    			if (changed.sum) {
+    				set_data_dev(t4, ctx.sum);
     			}
     		},
 
@@ -313,8 +344,12 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(h1);
+    				detach_dev(button);
+    				detach_dev(t1);
+    				detach_dev(p);
     			}
+
+    			dispose();
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment.name, type: "component", source: "", ctx });
@@ -322,47 +357,35 @@ var app = (function () {
     }
 
     function instance($$self, $$props, $$invalidate) {
-    	let { name } = $$props;
-
-    	const writable_props = ['name'];
-    	Object.keys($$props).forEach(key => {
-    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<App> was created with unknown prop '${key}'`);
-    	});
-
-    	$$self.$set = $$props => {
-    		if ('name' in $$props) $$invalidate('name', name = $$props.name);
-    	};
+    	let numbers=[1,2,3,4];
+      
+      function addNumbers(){
+        $$invalidate('numbers', numbers=[...numbers,numbers.length+1]);
+      }
 
     	$$self.$capture_state = () => {
-    		return { name };
+    		return {};
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('name' in $$props) $$invalidate('name', name = $$props.name);
+    		if ('numbers' in $$props) $$invalidate('numbers', numbers = $$props.numbers);
+    		if ('sum' in $$props) $$invalidate('sum', sum = $$props.sum);
     	};
 
-    	return { name };
+    	let sum;
+
+    	$$self.$$.update = ($$dirty = { numbers: 1 }) => {
+    		if ($$dirty.numbers) { $$invalidate('sum', sum=numbers.reduce((t,n)=>t+n)); }
+    	};
+
+    	return { numbers, addNumbers, sum };
     }
 
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance, create_fragment, safe_not_equal, ["name"]);
+    		init(this, options, instance, create_fragment, safe_not_equal, []);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "App", options, id: create_fragment.name });
-
-    		const { ctx } = this.$$;
-    		const props = options.props || {};
-    		if (ctx.name === undefined && !('name' in props)) {
-    			console.warn("<App> was created without expected prop 'name'");
-    		}
-    	}
-
-    	get name() {
-    		throw new Error("<App>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set name(value) {
-    		throw new Error("<App>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
