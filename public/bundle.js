@@ -68,8 +68,16 @@ var app = (function () {
         else
             node.setAttribute(attribute, value);
     }
+    function to_number(value) {
+        return value === '' ? undefined : +value;
+    }
     function children(element) {
         return Array.from(element.childNodes);
+    }
+    function set_input_value(input, value) {
+        if (value != null || input.value) {
+            input.value = value;
+        }
     }
     function set_style(node, key, value, important) {
         node.style.setProperty(key, value, important ? 'important' : '');
@@ -868,7 +876,59 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (66:0) {:else}
+    // (72:0) {:else}
+    function create_else_block_1(ctx) {
+    	var p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Please,checked";
+    			attr_dev(p, "class", "svelte-1haej5p");
+    			add_location(p, file$4, 72, 0, 1502);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(p);
+    			}
+    		}
+    	};
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block_1.name, type: "else", source: "(72:0) {:else}", ctx });
+    	return block;
+    }
+
+    // (70:0) {#if yes}
+    function create_if_block_1(ctx) {
+    	var p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Thank you";
+    			attr_dev(p, "class", "svelte-1haej5p");
+    			add_location(p, file$4, 70, 0, 1477);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(p);
+    			}
+    		}
+    	};
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(70:0) {#if yes}", ctx });
+    	return block;
+    }
+
+    // (86:0) {:else}
     function create_else_block(ctx) {
     	var button, dispose;
 
@@ -876,7 +936,7 @@ var app = (function () {
     		c: function create() {
     			button = element("button");
     			button.textContent = "In";
-    			add_location(button, file$4, 66, 0, 1333);
+    			add_location(button, file$4, 86, 0, 1775);
     			dispose = listen_dev(button, "click", ctx.toggle);
     		},
 
@@ -892,11 +952,11 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block.name, type: "else", source: "(66:0) {:else}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block.name, type: "else", source: "(86:0) {:else}", ctx });
     	return block;
     }
 
-    // (62:0) {#if user.loggedIn}
+    // (82:0) {#if user.loggedIn}
     function create_if_block(ctx) {
     	var button, dispose;
 
@@ -904,7 +964,7 @@ var app = (function () {
     		c: function create() {
     			button = element("button");
     			button.textContent = "Out";
-    			add_location(button, file$4, 62, 2, 1278);
+    			add_location(button, file$4, 82, 2, 1720);
     			dispose = listen_dev(button, "click", ctx.toggle);
     		},
 
@@ -920,35 +980,35 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(62:0) {#if user.loggedIn}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(82:0) {#if user.loggedIn}", ctx });
     	return block;
     }
 
-    // (72:0) {#each cats as cat,i}
+    // (92:0) {#each cats as cat,i}
     function create_each_block_1(ctx) {
-    	var li, a, t0_value = ctx.i+1 + "", t0, t1, t2_value = ctx.cat.name + "", t2, t3;
+    	var li, a_1, t0_value = ctx.i+1 + "", t0, t1, t2_value = ctx.cat.name + "", t2, t3;
 
     	const block = {
     		c: function create() {
     			li = element("li");
-    			a = element("a");
+    			a_1 = element("a");
     			t0 = text(t0_value);
     			t1 = space();
     			t2 = text(t2_value);
     			t3 = space();
-    			attr_dev(a, "target", "_blank");
-    			attr_dev(a, "href", "https://www.youtube.com/watch?v=" + ctx.cat.id);
-    			add_location(a, file$4, 72, 6, 1414);
-    			add_location(li, file$4, 72, 2, 1410);
+    			attr_dev(a_1, "target", "_blank");
+    			attr_dev(a_1, "href", "https://www.youtube.com/watch?v=" + ctx.cat.id);
+    			add_location(a_1, file$4, 92, 6, 1856);
+    			add_location(li, file$4, 92, 2, 1852);
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
-    			append_dev(li, a);
-    			append_dev(a, t0);
-    			append_dev(a, t1);
-    			append_dev(a, t2);
-    			append_dev(a, t3);
+    			append_dev(li, a_1);
+    			append_dev(a_1, t0);
+    			append_dev(a_1, t1);
+    			append_dev(a_1, t2);
+    			append_dev(a_1, t3);
     		},
 
     		p: noop,
@@ -959,11 +1019,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block_1.name, type: "each", source: "(72:0) {#each cats as cat,i}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block_1.name, type: "each", source: "(92:0) {#each cats as cat,i}", ctx });
     	return block;
     }
 
-    // (86:0) {#each things as thing (thing.id)}
+    // (106:0) {#each things as thing (thing.id)}
     function create_each_block(key_1, ctx) {
     	var first, current;
 
@@ -1015,12 +1075,30 @@ var app = (function () {
     			destroy_component(thing, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block.name, type: "each", source: "(86:0) {#each things as thing (thing.id)}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block.name, type: "each", source: "(106:0) {#each things as thing (thing.id)}", ctx });
     	return block;
     }
 
     function create_fragment$4(ctx) {
-    	var t0, t1, div, t2_value = ctx.m.x + "", t2, t3, t4_value = ctx.m.y + "", t4, t5, t6, ul, t7, button0, t9, p, t10_value = ctx.numbers.join('+') + "", t10, t11, t12, t13, t14, button1, t16, each_blocks = [], each1_lookup = new Map(), each1_anchor, current, dispose;
+    	var label0, input0, input0_updating = false, t0, input1, t1, label1, input2, input2_updating = false, t2, input3, t3, p0, t4, t5, t6, t7, t8_value = ctx.a+ctx.b + "", t8, t9, label2, input4, t10, t11, t12, input5, t13, h1, t14, t15, t16, t17, t18, div, t19_value = ctx.m.x + "", t19, t20, t21_value = ctx.m.y + "", t21, t22, t23, ul, t24, button0, t26, p1, t27_value = ctx.numbers.join('+') + "", t27, t28, t29, t30, t31, button1, t33, each_blocks = [], each1_lookup = new Map(), each1_anchor, current, dispose;
+
+    	function input0_input_handler() {
+    		input0_updating = true;
+    		ctx.input0_input_handler.call(input0);
+    	}
+
+    	function input2_input_handler() {
+    		input2_updating = true;
+    		ctx.input2_input_handler.call(input2);
+    	}
+
+    	function select_block_type(changed, ctx) {
+    		if (ctx.yes) return create_if_block_1;
+    		return create_else_block_1;
+    	}
+
+    	var current_block_type = select_block_type(null, ctx);
+    	var if_block0 = current_block_type(ctx);
 
     	var fancybutton = new FancyButton({ $$inline: true });
     	fancybutton.$on("click", handleButtonClick);
@@ -1028,13 +1106,13 @@ var app = (function () {
     	var inner = new Inner({ $$inline: true });
     	inner.$on("message", ctx.message_handler);
 
-    	function select_block_type(changed, ctx) {
+    	function select_block_type_1(changed, ctx) {
     		if (ctx.user.loggedIn) return create_if_block;
     		return create_else_block;
     	}
 
-    	var current_block_type = select_block_type(null, ctx);
-    	var if_block = current_block_type(ctx);
+    	var current_block_type_1 = select_block_type_1(null, ctx);
+    	var if_block1 = current_block_type_1(ctx);
 
     	let each_value_1 = ctx.cats;
 
@@ -1066,51 +1144,113 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			fancybutton.$$.fragment.c();
+    			label0 = element("label");
+    			input0 = element("input");
     			t0 = space();
-    			inner.$$.fragment.c();
+    			input1 = element("input");
     			t1 = space();
-    			div = element("div");
-    			t2 = text(t2_value);
+    			label1 = element("label");
+    			input2 = element("input");
+    			t2 = space();
+    			input3 = element("input");
     			t3 = space();
-    			t4 = text(t4_value);
-    			t5 = space();
-    			if_block.c();
-    			t6 = space();
+    			p0 = element("p");
+    			t4 = text(ctx.a);
+    			t5 = text("+");
+    			t6 = text(ctx.b);
+    			t7 = text("=");
+    			t8 = text(t8_value);
+    			t9 = space();
+    			label2 = element("label");
+    			input4 = element("input");
+    			t10 = text("\n  Yes, i want.");
+    			t11 = space();
+    			if_block0.c();
+    			t12 = space();
+    			input5 = element("input");
+    			t13 = space();
+    			h1 = element("h1");
+    			t14 = text("Hi,");
+    			t15 = text(ctx.name);
+    			t16 = space();
+    			fancybutton.$$.fragment.c();
+    			t17 = space();
+    			inner.$$.fragment.c();
+    			t18 = space();
+    			div = element("div");
+    			t19 = text(t19_value);
+    			t20 = space();
+    			t21 = text(t21_value);
+    			t22 = space();
+    			if_block1.c();
+    			t23 = space();
     			ul = element("ul");
 
     			for (let i = 0; i < each_blocks_1.length; i += 1) {
     				each_blocks_1[i].c();
     			}
 
-    			t7 = space();
+    			t24 = space();
     			button0 = element("button");
     			button0.textContent = "Add numbers";
-    			t9 = space();
-    			p = element("p");
-    			t10 = text(t10_value);
-    			t11 = text("=");
-    			t12 = text(ctx.sum);
-    			t13 = space();
+    			t26 = space();
+    			p1 = element("p");
+    			t27 = text(t27_value);
+    			t28 = text("=");
+    			t29 = text(ctx.sum);
+    			t30 = space();
     			nested.$$.fragment.c();
-    			t14 = space();
+    			t31 = space();
     			button1 = element("button");
     			button1.textContent = "Delete first element";
-    			t16 = space();
+    			t33 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			each1_anchor = empty();
-    			add_location(div, file$4, 58, 0, 1200);
-    			add_location(ul, file$4, 70, 0, 1381);
-    			add_location(button0, file$4, 77, 0, 1529);
-    			attr_dev(p, "class", "svelte-1haej5p");
-    			add_location(p, file$4, 80, 0, 1582);
-    			add_location(button1, file$4, 82, 0, 1634);
+    			attr_dev(input0, "type", "number");
+    			attr_dev(input0, "min", "0");
+    			attr_dev(input0, "max", "10");
+    			add_location(input0, file$4, 57, 0, 1155);
+    			attr_dev(input1, "type", "range");
+    			attr_dev(input1, "min", "0");
+    			attr_dev(input1, "max", "10");
+    			add_location(input1, file$4, 58, 0, 1203);
+    			add_location(label0, file$4, 56, 0, 1147);
+    			attr_dev(input2, "type", "number");
+    			attr_dev(input2, "min", "0");
+    			attr_dev(input2, "max", "10");
+    			add_location(input2, file$4, 61, 0, 1267);
+    			attr_dev(input3, "type", "range");
+    			attr_dev(input3, "min", "0");
+    			attr_dev(input3, "max", "10");
+    			add_location(input3, file$4, 62, 0, 1315);
+    			add_location(label1, file$4, 60, 0, 1259);
+    			attr_dev(p0, "class", "svelte-1haej5p");
+    			add_location(p0, file$4, 64, 0, 1371);
+    			attr_dev(input4, "type", "checkbox");
+    			add_location(input4, file$4, 66, 0, 1400);
+    			add_location(label2, file$4, 65, 0, 1392);
+    			add_location(input5, file$4, 74, 0, 1530);
+    			add_location(h1, file$4, 75, 0, 1557);
+    			add_location(div, file$4, 78, 0, 1642);
+    			add_location(ul, file$4, 90, 0, 1823);
+    			add_location(button0, file$4, 97, 0, 1971);
+    			attr_dev(p1, "class", "svelte-1haej5p");
+    			add_location(p1, file$4, 100, 0, 2024);
+    			add_location(button1, file$4, 102, 0, 2076);
 
     			dispose = [
+    				listen_dev(input0, "input", input0_input_handler),
+    				listen_dev(input1, "change", ctx.input1_change_input_handler),
+    				listen_dev(input1, "input", ctx.input1_change_input_handler),
+    				listen_dev(input2, "input", input2_input_handler),
+    				listen_dev(input3, "change", ctx.input3_change_input_handler),
+    				listen_dev(input3, "input", ctx.input3_change_input_handler),
+    				listen_dev(input4, "change", ctx.input4_change_handler),
+    				listen_dev(input5, "input", ctx.input5_input_handler),
     				listen_dev(div, "mousemove", ctx.handleMouseMove),
     				listen_dev(button0, "click", ctx.addNumbers),
     				listen_dev(button1, "click", ctx.handlerClick)
@@ -1122,35 +1262,82 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			mount_component(fancybutton, target, anchor);
-    			insert_dev(target, t0, anchor);
-    			mount_component(inner, target, anchor);
+    			insert_dev(target, label0, anchor);
+    			append_dev(label0, input0);
+
+    			set_input_value(input0, ctx.a);
+
+    			append_dev(label0, t0);
+    			append_dev(label0, input1);
+
+    			set_input_value(input1, ctx.a);
+
     			insert_dev(target, t1, anchor);
+    			insert_dev(target, label1, anchor);
+    			append_dev(label1, input2);
+
+    			set_input_value(input2, ctx.b);
+
+    			append_dev(label1, t2);
+    			append_dev(label1, input3);
+
+    			set_input_value(input3, ctx.b);
+
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, p0, anchor);
+    			append_dev(p0, t4);
+    			append_dev(p0, t5);
+    			append_dev(p0, t6);
+    			append_dev(p0, t7);
+    			append_dev(p0, t8);
+    			insert_dev(target, t9, anchor);
+    			insert_dev(target, label2, anchor);
+    			append_dev(label2, input4);
+
+    			input4.checked = ctx.yes;
+
+    			append_dev(label2, t10);
+    			insert_dev(target, t11, anchor);
+    			if_block0.m(target, anchor);
+    			insert_dev(target, t12, anchor);
+    			insert_dev(target, input5, anchor);
+
+    			set_input_value(input5, ctx.name);
+
+    			insert_dev(target, t13, anchor);
+    			insert_dev(target, h1, anchor);
+    			append_dev(h1, t14);
+    			append_dev(h1, t15);
+    			insert_dev(target, t16, anchor);
+    			mount_component(fancybutton, target, anchor);
+    			insert_dev(target, t17, anchor);
+    			mount_component(inner, target, anchor);
+    			insert_dev(target, t18, anchor);
     			insert_dev(target, div, anchor);
-    			append_dev(div, t2);
-    			append_dev(div, t3);
-    			append_dev(div, t4);
-    			insert_dev(target, t5, anchor);
-    			if_block.m(target, anchor);
-    			insert_dev(target, t6, anchor);
+    			append_dev(div, t19);
+    			append_dev(div, t20);
+    			append_dev(div, t21);
+    			insert_dev(target, t22, anchor);
+    			if_block1.m(target, anchor);
+    			insert_dev(target, t23, anchor);
     			insert_dev(target, ul, anchor);
 
     			for (let i = 0; i < each_blocks_1.length; i += 1) {
     				each_blocks_1[i].m(ul, null);
     			}
 
-    			insert_dev(target, t7, anchor);
+    			insert_dev(target, t24, anchor);
     			insert_dev(target, button0, anchor);
-    			insert_dev(target, t9, anchor);
-    			insert_dev(target, p, anchor);
-    			append_dev(p, t10);
-    			append_dev(p, t11);
-    			append_dev(p, t12);
-    			insert_dev(target, t13, anchor);
+    			insert_dev(target, t26, anchor);
+    			insert_dev(target, p1, anchor);
+    			append_dev(p1, t27);
+    			append_dev(p1, t28);
+    			append_dev(p1, t29);
+    			insert_dev(target, t30, anchor);
     			mount_component(nested, target, anchor);
-    			insert_dev(target, t14, anchor);
+    			insert_dev(target, t31, anchor);
     			insert_dev(target, button1, anchor);
-    			insert_dev(target, t16, anchor);
+    			insert_dev(target, t33, anchor);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(target, anchor);
@@ -1161,20 +1348,56 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if ((!current || changed.m) && t2_value !== (t2_value = ctx.m.x + "")) {
-    				set_data_dev(t2, t2_value);
+    			if (!input0_updating && changed.a) set_input_value(input0, ctx.a);
+    			input0_updating = false;
+    			if (changed.a) set_input_value(input1, ctx.a);
+    			if (!input2_updating && changed.b) set_input_value(input2, ctx.b);
+    			input2_updating = false;
+    			if (changed.b) set_input_value(input3, ctx.b);
+
+    			if (!current || changed.a) {
+    				set_data_dev(t4, ctx.a);
     			}
 
-    			if ((!current || changed.m) && t4_value !== (t4_value = ctx.m.y + "")) {
-    				set_data_dev(t4, t4_value);
+    			if (!current || changed.b) {
+    				set_data_dev(t6, ctx.b);
     			}
+
+    			if ((!current || changed.a || changed.b) && t8_value !== (t8_value = ctx.a+ctx.b + "")) {
+    				set_data_dev(t8, t8_value);
+    			}
+
+    			if (changed.yes) input4.checked = ctx.yes;
 
     			if (current_block_type !== (current_block_type = select_block_type(changed, ctx))) {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(t6.parentNode, t6);
+    				if_block0.d(1);
+    				if_block0 = current_block_type(ctx);
+    				if (if_block0) {
+    					if_block0.c();
+    					if_block0.m(t12.parentNode, t12);
+    				}
+    			}
+
+    			if (changed.name && (input5.value !== ctx.name)) set_input_value(input5, ctx.name);
+
+    			if (!current || changed.name) {
+    				set_data_dev(t15, ctx.name);
+    			}
+
+    			if ((!current || changed.m) && t19_value !== (t19_value = ctx.m.x + "")) {
+    				set_data_dev(t19, t19_value);
+    			}
+
+    			if ((!current || changed.m) && t21_value !== (t21_value = ctx.m.y + "")) {
+    				set_data_dev(t21, t21_value);
+    			}
+
+    			if (current_block_type_1 !== (current_block_type_1 = select_block_type_1(changed, ctx))) {
+    				if_block1.d(1);
+    				if_block1 = current_block_type_1(ctx);
+    				if (if_block1) {
+    					if_block1.c();
+    					if_block1.m(t23.parentNode, t23);
     				}
     			}
 
@@ -1200,12 +1423,12 @@ var app = (function () {
     				each_blocks_1.length = each_value_1.length;
     			}
 
-    			if ((!current || changed.numbers) && t10_value !== (t10_value = ctx.numbers.join('+') + "")) {
-    				set_data_dev(t10, t10_value);
+    			if ((!current || changed.numbers) && t27_value !== (t27_value = ctx.numbers.join('+') + "")) {
+    				set_data_dev(t27, t27_value);
     			}
 
     			if (!current || changed.sum) {
-    				set_data_dev(t12, ctx.sum);
+    				set_data_dev(t29, ctx.sum);
     			}
 
     			var nested_changes = (changed.obj) ? get_spread_update(nested_spread_levels, [
@@ -1248,43 +1471,64 @@ var app = (function () {
     		},
 
     		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(label0);
+    				detach_dev(t1);
+    				detach_dev(label1);
+    				detach_dev(t3);
+    				detach_dev(p0);
+    				detach_dev(t9);
+    				detach_dev(label2);
+    				detach_dev(t11);
+    			}
+
+    			if_block0.d(detaching);
+
+    			if (detaching) {
+    				detach_dev(t12);
+    				detach_dev(input5);
+    				detach_dev(t13);
+    				detach_dev(h1);
+    				detach_dev(t16);
+    			}
+
     			destroy_component(fancybutton, detaching);
 
     			if (detaching) {
-    				detach_dev(t0);
+    				detach_dev(t17);
     			}
 
     			destroy_component(inner, detaching);
 
     			if (detaching) {
-    				detach_dev(t1);
+    				detach_dev(t18);
     				detach_dev(div);
-    				detach_dev(t5);
+    				detach_dev(t22);
     			}
 
-    			if_block.d(detaching);
+    			if_block1.d(detaching);
 
     			if (detaching) {
-    				detach_dev(t6);
+    				detach_dev(t23);
     				detach_dev(ul);
     			}
 
     			destroy_each(each_blocks_1, detaching);
 
     			if (detaching) {
-    				detach_dev(t7);
+    				detach_dev(t24);
     				detach_dev(button0);
-    				detach_dev(t9);
-    				detach_dev(p);
-    				detach_dev(t13);
+    				detach_dev(t26);
+    				detach_dev(p1);
+    				detach_dev(t30);
     			}
 
     			destroy_component(nested, detaching);
 
     			if (detaching) {
-    				detach_dev(t14);
+    				detach_dev(t31);
     				detach_dev(button1);
-    				detach_dev(t16);
+    				detach_dev(t33);
     			}
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1344,9 +1588,43 @@ var app = (function () {
         $$invalidate('m', m.x=e.clientX, m);
         $$invalidate('m', m.y=e.clientY, m);
       };
+      let name='';
+      let a=0;
+      let b=0;
+      let yes=false;
 
     	function message_handler(event) {
     		bubble($$self, event);
+    	}
+
+    	function input0_input_handler() {
+    		a = to_number(this.value);
+    		$$invalidate('a', a);
+    	}
+
+    	function input1_change_input_handler() {
+    		a = to_number(this.value);
+    		$$invalidate('a', a);
+    	}
+
+    	function input2_input_handler() {
+    		b = to_number(this.value);
+    		$$invalidate('b', b);
+    	}
+
+    	function input3_change_input_handler() {
+    		b = to_number(this.value);
+    		$$invalidate('b', b);
+    	}
+
+    	function input4_change_handler() {
+    		yes = this.checked;
+    		$$invalidate('yes', yes);
+    	}
+
+    	function input5_input_handler() {
+    		name = this.value;
+    		$$invalidate('name', name);
     	}
 
     	$$self.$capture_state = () => {
@@ -1357,6 +1635,10 @@ var app = (function () {
     		if ('numbers' in $$props) $$invalidate('numbers', numbers = $$props.numbers);
     		if ('things' in $$props) $$invalidate('things', things = $$props.things);
     		if ('m' in $$props) $$invalidate('m', m = $$props.m);
+    		if ('name' in $$props) $$invalidate('name', name = $$props.name);
+    		if ('a' in $$props) $$invalidate('a', a = $$props.a);
+    		if ('b' in $$props) $$invalidate('b', b = $$props.b);
+    		if ('yes' in $$props) $$invalidate('yes', yes = $$props.yes);
     		if ('sum' in $$props) $$invalidate('sum', sum = $$props.sum);
     	};
 
@@ -1377,8 +1659,18 @@ var app = (function () {
     		handlerClick,
     		m,
     		handleMouseMove,
+    		name,
+    		a,
+    		b,
+    		yes,
     		sum,
-    		message_handler
+    		message_handler,
+    		input0_input_handler,
+    		input1_change_input_handler,
+    		input2_input_handler,
+    		input3_change_input_handler,
+    		input4_change_handler,
+    		input5_input_handler
     	};
     }
 

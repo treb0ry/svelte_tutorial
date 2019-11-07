@@ -47,13 +47,33 @@ const toggle=()=>{
   function handleButtonClick(){
     alert('button is click')
   }
+  let name='';
+  let a=0;
+  let b=0;
+  let yes=false;
 </script>
 
-<style>
-	p {
-		color: purple;
-	}
-</style>
+
+<label>
+<input type=number bind:value={a} min=0 max=10>
+<input type=range bind:value={a} min=0 max=10>
+</label>
+<label>
+<input type=number bind:value={b} min=0 max=10>
+<input type=range bind:value={b} min=0 max=10>
+</label>
+<p>{a}+{b}={a+b}</p>
+<label>
+<input type="checkbox" bind:checked={yes}>
+  Yes, i want.
+</label>
+{#if yes}
+<p>Thank you</p>
+{:else}
+<p>Please,checked</p>
+{/if}
+<input bind:value={name}/>
+<h1>Hi,{name}</h1>
 <FancyButton on:click={handleButtonClick} />
 <Inner on:message />
 <div on:mousemove={handleMouseMove}>
@@ -87,3 +107,8 @@ Add numbers
   <Thing current={thing.color} />
 {/each}
 
+<style>
+	p {
+		color: purple;
+	}
+</style>
