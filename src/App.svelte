@@ -3,7 +3,17 @@ import Nested from './Nested.svelte';
 import Thing from './Thing.svelte';
 import Inner from './Inner.svelte';
 import FancyButton from './FancyButton.svelte';
+import {onMount} from 'svelte';
+import {onDestroy} from 'svelte';
 
+let seconds=0;
+const interval=setInterval(()=>seconds+=1,1000);
+onDestroy(()=>clearInterval(interval));
+let photos=[];
+onMount(async()=>{
+  const res=await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
+  photos=await res.json();
+})
 function handleMessage(e){
   alert(e.detail.text);
 }
@@ -53,7 +63,17 @@ const toggle=()=>{
   let yes=false;
 </script>
 
-
+<p>Page open {seconds} sec. ago</p>
+<div class="photos">
+  {#each photos as photo}
+    <figure>
+      <img src={photo.thumbnailUrl} alt={photo.title}>
+      <figcaption>{photo.title}</figcaption>
+    </figure>
+    {:else}
+      <p>loading...</p>
+  {/each}
+</div>
 <label>
 <input type=number bind:value={a} min=0 max=10>
 <input type=range bind:value={a} min=0 max=10>
