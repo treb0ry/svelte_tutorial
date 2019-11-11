@@ -4,7 +4,11 @@ import Thing from './Thing.svelte';
 import Inner from './Inner.svelte';
 import FancyButton from './FancyButton.svelte';
 import {onMount} from 'svelte';
+import {onDestroy} from 'svelte';
 
+let seconds=0;
+const interval=setInterval(()=>seconds+=1,1000);
+onDestroy(()=>clearInterval(interval));
 let photos=[];
 onMount(async()=>{
   const res=await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
@@ -59,7 +63,7 @@ const toggle=()=>{
   let yes=false;
 </script>
 
-
+<p>Page open {seconds} sec. ago</p>
 <div class="photos">
   {#each photos as photo}
     <figure>
